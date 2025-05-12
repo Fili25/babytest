@@ -105,10 +105,10 @@ function closeModal(id) {
 function changeSettings() {
     const feedMins = feedInterval / 60000;
     const sleepMins = sleepInterval / 60000;
-    document.getElementById("feedHours").value = Math.floor(feedMins / 60);
-    document.getElementById("feedMinutes").value = feedMins % 60;
-    document.getElementById("sleepHours").value = Math.floor(sleepMins / 60);
-    document.getElementById("sleepMinutes").value = sleepMins % 60;
+    document.getElementById("feedHoursVal").textContent = Math.floor(feedMins / 60);
+    document.getElementById("feedMinutesVal").textContent = feedMins % 60;
+    document.getElementById("sleepHoursVal").textContent = Math.floor(sleepMins / 60);
+    document.getElementById("sleepMinutesVal").textContent = sleepMins % 60;
     openModal("settingsModal");
 }
 
