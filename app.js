@@ -1,7 +1,5 @@
 
 let events = [];
-let feedInterval = 3.5 * 60 * 60 * 1000;  // 3 ч 30 мин
-let sleepInterval = 2 * 60 * 60 * 1000;   // 2 ч 00 мин
 
 function logEvent(type) {
     const now = new Date();
@@ -30,13 +28,12 @@ function addEvent(type, timeStr, timestamp) {
     const id = Date.now() + Math.random();
     events.push({ id, type, timeStr, timestamp });
     renderEvents();
-    updateNextTimes();
 }
 
 function renderEvents() {
     const historyList = document.getElementById('eventHistory');
     historyList.innerHTML = '';
-    const sorted = [...events].sort((a, b) => b.timestamp - a.timestamp);
+    const sorted = [...events].sort((a, b) => b.timestamp - a.timestamp); // сортировка по убыванию времени
     sorted.forEach(event => {
         const item = document.createElement('li');
         item.textContent = `${event.type} — ${event.timeStr}`;
@@ -44,12 +41,12 @@ function renderEvents() {
             if (confirm("Удалить это событие?")) {
                 events = events.filter(e => e.id !== event.id);
                 renderEvents();
-                updateNextTimes();
             }
         };
         historyList.appendChild(item);
     });
 }
+<<<<<<< HEAD
 
 function updateNextTimes() {
     const nextFeedEl = document.getElementById("nextFeed");
@@ -112,3 +109,5 @@ function formatMs(ms, baseTimestamp = null, past = false) {
     const minutes = totalMinutes % 60;
     return `${hours} ч ${minutes} мин`;
 }
+=======
+>>>>>>> parent of 6070179 (77)
