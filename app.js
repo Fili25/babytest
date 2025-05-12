@@ -154,7 +154,13 @@ function saveManualEvent() {
 }
 
 
+
 function selectEventType(type) {
+  const slider = document.getElementById("eventSlider");
+  if (slider) {
+    slider.style.left = type === "Кормление" ? "0%" : "50%";
+  }
+
   manualEventType = type;
   document.getElementById("typeFeed").classList.toggle("active", type === "Кормление");
   document.getElementById("typeSleep").classList.toggle("active", type === "Сон");
