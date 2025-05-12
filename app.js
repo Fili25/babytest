@@ -113,17 +113,20 @@ function changeSettings() {
 }
 
 
+
 function saveIntervalSettings() {
-    const fh = parseInt(document.getElementById("feedHours").value) || 0;
-    const fm = parseInt(document.getElementById("feedMinutes").value) || 0;
-    const sh = parseInt(document.getElementById("sleepHours").value) || 0;
-    const sm = parseInt(document.getElementById("sleepMinutes").value) || 0;
+    const fh = parseInt(document.getElementById("feedHoursVal").textContent) || 0;
+    const fm = parseInt(document.getElementById("feedMinutesVal").textContent) || 0;
+    const sh = parseInt(document.getElementById("sleepHoursVal").textContent) || 0;
+    const sm = parseInt(document.getElementById("sleepMinutesVal").textContent) || 0;
 
     feedInterval = (fh * 60 + fm) * 60000;
     sleepInterval = (sh * 60 + sm) * 60000;
 
-    updateNextTimes();
+    updateNextTimes(); // <-- пересчитать отображение сразу
     closeModal("settingsModal");
+}
+
 }
 
 
