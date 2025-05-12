@@ -247,3 +247,40 @@ button:hover {
   min-width: 28px;
   text-align: center;
 }
+
+
+.settings-group {
+  margin-bottom: 24px;
+}
+
+.settings-group .stepper {
+  margin-top: 6px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.stepper button {
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ffd5e5;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepper span {
+  font-size: 18px;
+  min-width: 28px;
+  text-align: center;
+}
