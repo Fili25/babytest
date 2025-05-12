@@ -28,15 +28,15 @@
 
     <div id="settingsModal" class="modal hidden">
       <div class="modal-content">
-        <h2>Настройки</h2>
-        <label>Время следующего кормления:
-          <input type="time" id="feedTimeInput">
+        <h2>Настройки интервалов</h2>
+        <label>Интервал между кормлениями (в минутах):
+          <input type="number" id="feedIntervalInput" value="210">
         </label>
-        <label>Время следующего сна:
-          <input type="time" id="sleepTimeInput">
+        <label>Интервал между снами (в минутах):
+          <input type="number" id="sleepIntervalInput" value="120">
         </label>
         <div class="modal-buttons">
-          <button onclick="saveTimeSettings()">Сохранить</button>
+          <button onclick="saveIntervalSettings()">Сохранить</button>
           <button onclick="closeModal('settingsModal')">Отмена</button>
         </div>
       </div>

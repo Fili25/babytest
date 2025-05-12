@@ -1,9 +1,8 @@
 
 let events = [];
-let feedInterval = 3.5 * 60 * 60 * 1000;
-let sleepInterval = 2 * 60 * 60 * 1000;
-let nextFeedManual = null;
-let nextSleepManual = null;
+let feedInterval = 210 * 60 * 1000;
+let sleepInterval = 120 * 60 * 1000;
+
 
 function logEvent(type) {
     const now = new Date();
@@ -91,9 +90,21 @@ function openModal(id) {
 function closeModal(id) {
     document.getElementById(id).classList.add("hidden");
 }
+
 function changeSettings() {
+    document.getElementById("feedIntervalInput").value = Math.floor(feedInterval / 60000);
+    document.getElementById("sleepIntervalInput").value = Math.floor(sleepInterval / 60000);
     openModal("settingsModal");
 }
+function saveIntervalSettings() {
+    const feed = parseInt(document.getElementById("feedIntervalInput").value);
+    const sleep = parseInt(document.getElementById("sleepIntervalInput").value);
+    if (!isNaN(feed)) feedInterval = feed * 60000;
+    if (!isNaN(sleep)) sleepInterval = sleep * 60000;
+    updateNextTimes();
+    closeModal("settingsModal");
+}
+
 function saveTimeSettings() {
     const feedTime = document.getElementById("feedTimeInput").value;
     const sleepTime = document.getElementById("sleepTimeInput").value;
