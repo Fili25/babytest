@@ -85,24 +85,30 @@ function updateNextTimes() {
     nextSleepEl.textContent = nextSleepStr;
 }
 
-function formatMs(ms) {
+
+function formatMs(ms, baseTimestamp = null, past = false) {
+    const totalMinutes = Math.floor(Math.abs(ms) / 60000);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    let timeStr = "";
+    if (hours > 0) {
+        timeStr = `${hours} ч ${minutes} мин`;
+    } else {
+        timeStr = `${minutes} мин`;
+    }
+
+    if (baseTimestamp) {
+        const targetDate = new Date(baseTimestamp);
+        const targetTimeStr = targetDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        timeStr += ` (${targetTimeStr})`;
+    }
+
+    return past ? `${timeStr} назад` : timeStr;
+}
+
     const totalMinutes = Math.floor(ms / 60000);
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
     return `${hours} ч ${minutes} мин`;
-}
-
-
-function changeSettings() {
-    const feed = prompt("Интервал между кормлениями (в минутах):", "210");
-    const sleep = prompt("Интервал между снами (в минутах):", "120");
-
-    if (feed && !isNaN(feed)) {
-        feedInterval = parseInt(feed) * 60 * 1000;
-    }
-    if (sleep && !isNaN(sleep)) {
-        sleepInterval = parseInt(sleep) * 60 * 1000;
-    }
-
-    updateNextTimes();
 }
