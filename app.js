@@ -14,7 +14,6 @@ function manualEntry() {
     const timeInput = prompt("Время (напр. 14:30):");
     if (!timeInput) return;
 
-    // Преобразуем время в timestamp
     const [hours, minutes] = timeInput.split(':');
     const now = new Date();
     now.setHours(parseInt(hours));
@@ -26,7 +25,7 @@ function manualEntry() {
 }
 
 function addEvent(type, timeStr, timestamp) {
-    const id = Date.now() + Math.random(); // уникальный id
+    const id = Date.now() + Math.random();
     events.push({ id, type, timeStr, timestamp });
     renderEvents();
 }
@@ -34,8 +33,7 @@ function addEvent(type, timeStr, timestamp) {
 function renderEvents() {
     const historyList = document.getElementById('eventHistory');
     historyList.innerHTML = '';
-    // Сортировка по timestamp по возрастанию
-    const sorted = [...events].sort((a, b) => a.timestamp - b.timestamp);
+    const sorted = [...events].sort((a, b) => b.timestamp - a.timestamp); // сортировка по убыванию времени
     sorted.forEach(event => {
         const item = document.createElement('li');
         item.textContent = `${event.type} — ${event.timeStr}`;
