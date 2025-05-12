@@ -44,8 +44,6 @@ function formatDateLabel(date) {
 }
 
 function renderEvents() {
-
-    
     const historyList = document.getElementById('eventHistory');
     historyList.innerHTML = '';
 
@@ -90,6 +88,8 @@ function renderEvents() {
         });
     });
 
+    const historyList = document.getElementById('eventHistory');
+    historyList.innerHTML = '';
     const sorted = [...events].sort((a, b) => b.timestamp - a.timestamp);
     sorted.forEach(event => {
         const item = document.createElement('li');
