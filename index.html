@@ -1,4 +1,4 @@
-<!-- Модальное окно ручного добавления -->
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -26,6 +26,37 @@
       <ul id="eventHistory"></ul>
     </div>
 
+    <!-- Модальное окно ручного добавления -->
+    <div id="manualModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Добавить вручную</h2>
+        <label>Тип события:
+          <select id="manualType" onchange="toggleManualFields()">
+            <option value="Кормление">Кормление</option>
+            <option value="Сон">Сон</option>
+          </select>
+        </label>
+        <div id="feedTimeBlock">
+          <label>Время кормления:
+            <input type="time" id="feedTimeInputManual" />
+          </label>
+        </div>
+        <div id="sleepTimeBlock" class="hidden">
+          <label>Время засыпания:
+            <input type="time" id="sleepStartInput" />
+          </label>
+          <label>Время пробуждения:
+            <input type="time" id="sleepEndInput" />
+          </label>
+        </div>
+        <div class="modal-buttons">
+          <button onclick="saveManualEvent()">Сохранить</button>
+          <button onclick="closeModal('manualModal')">Отмена</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно настроек -->
     <div id="settingsModal" class="modal hidden">
       <div class="modal-content">
         <h2>Настройки интервалов</h2>
@@ -42,7 +73,7 @@
       </div>
     </div>
   </div>
-  
-<script src="app.js"></script>
+
+  <script src="app.js"></script>
 </body>
 </html>
