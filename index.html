@@ -61,11 +61,13 @@
     <div id="settingsModal" class="modal hidden">
       <div class="modal-content">
         <h2>Настройки интервалов</h2>
-        <label>Интервал между кормлениями (в минутах):
-          <input type="number" id="feedIntervalInput" value="210">
+        <label>Интервал между кормлениями:
+          <input type="number" id="feedHours" min="0" max="23"> ч
+          <input type="number" id="feedMinutes" min="0" max="59"> мин
         </label>
-        <label>Интервал между снами (в минутах):
-          <input type="number" id="sleepIntervalInput" value="120">
+        <label>Интервал между снами:
+          <input type="number" id="sleepHours" min="0" max="23"> ч
+          <input type="number" id="sleepMinutes" min="0" max="59"> мин
         </label>
         <div class="modal-buttons">
           <button onclick="saveIntervalSettings()">Сохранить</button>
