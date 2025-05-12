@@ -1,4 +1,3 @@
-let manualEventType = 'Кормление';
 
 let events = [];
 let feedInterval = 210 * 60 * 1000;
@@ -36,16 +35,50 @@ function renderEvents() {
     const historyList = document.getElementById('eventHistory');
     historyList.innerHTML = '';
     const sorted = [...events].sort((a, b) => b.timestamp - a.timestamp);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const yesterday = new Date(today.getTime() - 86400000);
+
+    let currentDateLabel = null;
+
     sorted.forEach(event => {
+        const eventDate = new Date(event.timestamp);
+        eventDate.setHours(0, 0, 0, 0);
+
+        let dateLabel;
+        if (eventDate.getTime() === today.getTime()) {
+            dateLabel = null;
+        } else if (eventDate.getTime() === yesterday.getTime()) {
+            dateLabel = 'Вчера';
+        } else {
+            dateLabel = eventDate.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+
+        if (dateLabel && dateLabel !== currentDateLabel) {
+            const labelEl = document.createElement('li');
+            labelEl.textContent = dateLabel;
+            labelEl.classList.add('date-label');
+            historyList.appendChild(labelEl);
+            currentDateLabel = dateLabel;
+        }
+
         const item = document.createElement('li');
-        item.textContent = `${event.type} — ${event.timeStr}`;
-        item.onclick = () => {
+        item.classList.add('event-item');
+        const spanText = document.createElement('span');
+        spanText.textContent = `${event.type} — ${event.timeStr}`;
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = '✖';
+        removeBtn.className = 'remove-button';
+        removeBtn.onclick = () => {
             if (confirm("Удалить это событие?")) {
                 events = events.filter(e => e.id !== event.id);
                 renderEvents();
                 updateNextTimes();
             }
         };
+        item.appendChild(spanText);
+        item.appendChild(removeBtn);
         historyList.appendChild(item);
     });
 }
@@ -98,6 +131,7 @@ function updateNextTimes() {
 function openModal(id) {
     document.getElementById(id).classList.remove("hidden");
 }
+
 function closeModal(id) {
     document.getElementById(id).classList.add("hidden");
 }
@@ -112,8 +146,6 @@ function changeSettings() {
     openModal("settingsModal");
 }
 
-
-
 function saveIntervalSettings() {
     const fh = parseInt(document.getElementById("feedHoursVal").textContent) || 0;
     const fm = parseInt(document.getElementById("feedMinutesVal").textContent) || 0;
@@ -123,72 +155,25 @@ function saveIntervalSettings() {
     feedInterval = (fh * 60 + fm) * 60000;
     sleepInterval = (sh * 60 + sm) * 60000;
 
-    updateNextTimes(); // <-- пересчитать отображение сразу
+    localStorage.setItem("feedInterval", feedInterval);
+    localStorage.setItem("sleepInterval", sleepInterval);
+
+    updateNextTimes();
     closeModal("settingsModal");
 }
 
-}
-
-
-
-
-
-function openManualModal() {
-    manualEventType = "Кормление"; selectEventType("Кормление");
-    openModal("manualModal");
-}
-
-function toggleManualFields() {
-    const type = manualEventType;
-    document.getElementById("feedTimeBlock").classList.toggle("hidden", type !== "Кормление");
-    document.getElementById("sleepTimeBlock").classList.toggle("hidden", type !== "Сон");
-}
-
-function saveManualEvent() {
-    const type = manualEventType;
-
-    if (type === "Кормление") {
-        const timeStr = document.getElementById("feedTimeInputManual").value;
-        if (!timeStr) return alert("Укажите время кормления");
-        const [h, m] = timeStr.split(":");
-        const d = new Date();
-        d.setHours(h, m, 0, 0);
-        addEvent("Кормление", timeStr, d.getTime());
-    } else if (type === "Сон") {
-        const sleepStart = document.getElementById("sleepStartInput").value;
-        const sleepEnd = document.getElementById("sleepEndInput").value;
-        if (!sleepStart || !sleepEnd) return alert("Укажите оба времени сна");
-        const now = new Date();
-        const start = new Date(now); const end = new Date(now);
-        const [sh, sm] = sleepStart.split(":"); start.setHours(sh, sm, 0, 0);
-        const [eh, em] = sleepEnd.split(":"); end.setHours(eh, em, 0, 0);
-        addEvent("Заснул", sleepStart, start.getTime());
-        addEvent("Проснулся", sleepEnd, end.getTime());
-    }
-
-    closeModal("manualModal");
-}
-
-
-
-function selectEventType(type) {
-  const slider = document.getElementById("eventSlider");
-  if (slider) {
-    slider.style.left = type === "Кормление" ? "0%" : "50%";
-  }
-
-  manualEventType = type;
-  document.getElementById("typeFeed").classList.toggle("active", type === "Кормление");
-  document.getElementById("typeSleep").classList.toggle("active", type === "Сон");
-  toggleManualFields();
-}
-
-
-
 function updateDisplayValue(id, delta) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  let val = parseInt(el.textContent) || 0;
-  val = Math.max(0, val + delta);
-  el.textContent = val;
+    const el = document.getElementById(id);
+    if (!el) return;
+    let val = parseInt(el.textContent) || 0;
+    val = Math.max(0, val + delta);
+    el.textContent = val;
 }
+
+window.addEventListener("load", () => {
+    const savedFeed = localStorage.getItem("feedInterval");
+    const savedSleep = localStorage.getItem("sleepInterval");
+    if (savedFeed) feedInterval = parseInt(savedFeed);
+    if (savedSleep) sleepInterval = parseInt(savedSleep);
+    updateNextTimes();
+});
