@@ -179,3 +179,13 @@ function selectEventType(type) {
   document.getElementById("typeSleep").classList.toggle("active", type === "Сон");
   toggleManualFields();
 }
+
+
+
+function updateDisplayValue(id, delta) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  let val = parseInt(el.textContent) || 0;
+  val = Math.max(0, val + delta);
+  el.textContent = val;
+}
