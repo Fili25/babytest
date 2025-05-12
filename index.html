@@ -25,7 +25,45 @@
             <h2>История</h2>
             <ul id="eventHistory"></ul>
         </div>
+    
+<!-- Modal: Manual Entry -->
+<div id="manualModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Добавить событие</h2>
+    <label>Тип события:
+      <select id="manualType">
+        <option value="Кормление">🍽 Кормление</option>
+        <option value="Заснул">😴 Заснул</option>
+        <option value="Проснулся">🌅 Проснулся</option>
+      </select>
+    </label>
+    <label>Время:
+      <input type="time" id="manualTime">
+    </label>
+    <div class="modal-buttons">
+      <button onclick="saveManualEntry()">Сохранить</button>
+      <button onclick="closeModal('manualModal')">Отмена</button>
     </div>
+  </div>
+</div>
+
+<!-- Modal: Settings -->
+<div id="settingsModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Настройки</h2>
+    <label>Интервал между кормлениями (мин): 
+      <input type="number" id="feedIntervalInput" value="210">
+    </label>
+    <label>Интервал между снами (мин): 
+      <input type="number" id="sleepIntervalInput" value="120">
+    </label>
+    <div class="modal-buttons">
+      <button onclick="saveSettings()">Сохранить</button>
+      <button onclick="closeModal('settingsModal')">Отмена</button>
+    </div>
+  </div>
+</div>
+
     <script src="app.js"></script>
 </body>
 </html>
