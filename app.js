@@ -31,63 +31,7 @@ function addEvent(type, timeStr, timestamp) {
     updateNextTimes();
 }
 
-
-function formatDateLabel(date) {
-    const today = new Date();
-    const yesterday = new Date();
-    yesterday.setDate(today.getDate() - 1);
-
-    if (date.toDateString() === today.toDateString()) return "Сегодня";
-    if (date.toDateString() === yesterday.toDateString()) return "Вчера";
-
-    return date.toLocaleDateString("ru-RU", { day: 'numeric', month: 'long', year: 'numeric' });
-}
-
 function renderEvents() {
-    const historyList = document.getElementById('eventHistory');
-    historyList.innerHTML = '';
-
-    const sorted = [...events].sort((a, b) => b.timestamp - a.timestamp);
-
-    const grouped = {};
-    sorted.forEach(event => {
-        const d = new Date(event.timestamp);
-        const label = formatDateLabel(d);
-        if (!grouped[label]) grouped[label] = [];
-        grouped[label].push(event);
-    });
-
-    Object.entries(grouped).forEach(([label, items]) => {
-        const dateHeader = document.createElement('li');
-        dateHeader.textContent = label;
-        dateHeader.className = 'event-date-label';
-        historyList.appendChild(dateHeader);
-
-        items.forEach(event => {
-            const item = document.createElement('li');
-            const timeStr = new Date(event.timestamp).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-            item.classList.add('event-item');
-
-            const textSpan = document.createElement('span');
-            textSpan.textContent = `${event.type} — ${timeStr}`;
-
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'delete-btn';
-            deleteBtn.textContent = '✖';
-            deleteBtn.onclick = () => {
-                if (confirm("Удалить это событие?")) {
-                    events = events.filter(e => e.id !== event.id);
-                    renderEvents();
-                    updateNextTimes();
-                }
-            };
-
-            item.appendChild(textSpan);
-            item.appendChild(deleteBtn);
-            historyList.appendChild(item);
-        });
-    });
-
     const historyList = document.getElementById('eventHistory');
     historyList.innerHTML = '';
     const sorted = [...events].sort((a, b) => b.timestamp - a.timestamp);
