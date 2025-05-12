@@ -198,3 +198,27 @@ button:hover {
     cursor: pointer;
     padding: 0 6px;
 }
+
+
+#eventHistory .date-label {
+    font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    color: #888;
+    font-size: 14px;
+}
+
+.event-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remove-button {
+    background: transparent;
+    border: none;
+    color: #c44;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 6px;
+}
