@@ -2,30 +2,46 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Уход за малышом</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Уход за малышом</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>👶 Уход за малышом</h1>
-        <div class="buttons">
-            <button onclick="logEvent('Кормление')">🍽 Кормление — сейчас</button>
-            <button onclick="logEvent('Заснул')">😴 Заснул</button>
-            <button onclick="logEvent('Проснулся')">🌅 Проснулся</button>
-            <button onclick="manualEntry()">🕓 Добавить вручную</button>
-            <button onclick="changeSettings()">⚙️ Настройки</button>
-        </div>
-        <div class="next">
-            <p>Следующее кормление через: <span id="nextFeed">–</span></p>
-            <p>Следующий сон через: <span id="nextSleep">–</span></p>
-        </div>
-        <div class="history">
-            <h2>История</h2>
-            <ul id="eventHistory"></ul>
-        </div>
+  <div class="container">
+    <h1>👶 Уход за малышом</h1>
+    <div class="buttons">
+      <button onclick="logEvent('Кормление')">🍽 Кормление — сейчас</button>
+      <button onclick="logEvent('Заснул')">😴 Заснул</button>
+      <button onclick="logEvent('Проснулся')">🌅 Проснулся</button>
+      <button onclick="manualEntry()">🕓 Добавить вручную</button>
+      <button onclick="changeSettings()">⚙️ Настройки</button>
     </div>
-    <script src="app.js"></script>
+    <div class="next">
+      <p>Следующее кормление через: <span id="nextFeed">–</span></p>
+      <p>Следующий сон через: <span id="nextSleep">–</span></p>
+    </div>
+    <div class="history">
+      <h2>История</h2>
+      <ul id="eventHistory"></ul>
+    </div>
+
+    <div id="settingsModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Настройки</h2>
+        <label>Время следующего кормления:
+          <input type="time" id="feedTimeInput">
+        </label>
+        <label>Время следующего сна:
+          <input type="time" id="sleepTimeInput">
+        </label>
+        <div class="modal-buttons">
+          <button onclick="saveTimeSettings()">Сохранить</button>
+          <button onclick="closeModal('settingsModal')">Отмена</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
 </body>
 </html>
