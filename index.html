@@ -30,12 +30,10 @@
     <div id="manualModal" class="modal hidden">
       <div class="modal-content">
         <h2>Добавить вручную</h2>
-        <label>Тип события:
-          <select id="manualType" onchange="toggleManualFields()">
-            <option value="Кормление">Кормление</option>
-            <option value="Сон">Сон</option>
-          </select>
-        </label>
+        <div class="event-type-toggle">
+  <button id="typeFeed" class="active" onclick="selectEventType('Кормление')">Кормление</button>
+  <button id="typeSleep" onclick="selectEventType('Сон')">Сон</button>
+</div>
         <div id="feedTimeBlock">
           <label>Время кормления:
             <input type="time" id="feedTimeInputManual" />

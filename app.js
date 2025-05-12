@@ -115,20 +115,21 @@ function saveIntervalSettings() {
 }
 
 
+let manualEventType = 'Кормление';
+
 function openManualModal() {
-    document.getElementById("manualType").value = "Кормление";
-    toggleManualFields();
+    manualEventType = "Кормление"; selectEventType("Кормление");
     openModal("manualModal");
 }
 
 function toggleManualFields() {
-    const type = document.getElementById("manualType").value;
+    const type = manualEventType;
     document.getElementById("feedTimeBlock").classList.toggle("hidden", type !== "Кормление");
     document.getElementById("sleepTimeBlock").classList.toggle("hidden", type !== "Сон");
 }
 
 function saveManualEvent() {
-    const type = document.getElementById("manualType").value;
+    const type = manualEventType;
 
     if (type === "Кормление") {
         const timeStr = document.getElementById("feedTimeInputManual").value;
@@ -150,4 +151,12 @@ function saveManualEvent() {
     }
 
     closeModal("manualModal");
+}
+
+
+function selectEventType(type) {
+  manualEventType = type;
+  document.getElementById("typeFeed").classList.toggle("active", type === "Кормление");
+  document.getElementById("typeSleep").classList.toggle("active", type === "Сон");
+  toggleManualFields();
 }
