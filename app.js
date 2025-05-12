@@ -177,3 +177,54 @@ window.addEventListener("load", () => {
     if (savedSleep) sleepInterval = parseInt(savedSleep);
     updateNextTimes();
 });
+
+
+let manualEventType = 'Кормление';
+
+function openManualModal() {
+    selectEventType("Кормление");
+    openModal("manualModal");
+}
+
+function selectEventType(type) {
+    const slider = document.getElementById("eventSlider");
+    if (slider) {
+        slider.style.left = type === "Кормление" ? "0%" : "50%";
+    }
+
+    manualEventType = type;
+    document.getElementById("typeFeed").classList.toggle("active", type === "Кормление");
+    document.getElementById("typeSleep").classList.toggle("active", type === "Сон");
+    toggleManualFields();
+}
+
+function toggleManualFields() {
+    const type = manualEventType;
+    document.getElementById("feedTimeBlock").classList.toggle("hidden", type !== "Кормление");
+    document.getElementById("sleepTimeBlock").classList.toggle("hidden", type !== "Сон");
+}
+
+function saveManualEvent() {
+    const type = manualEventType;
+
+    if (type === "Кормление") {
+        const timeStr = document.getElementById("feedTimeInputManual").value;
+        if (!timeStr) return alert("Укажите время кормления");
+        const [h, m] = timeStr.split(":");
+        const d = new Date();
+        d.setHours(h, m, 0, 0);
+        addEvent("Кормление", timeStr, d.getTime());
+    } else if (type === "Сон") {
+        const sleepStart = document.getElementById("sleepStartInput").value;
+        const sleepEnd = document.getElementById("sleepEndInput").value;
+        if (!sleepStart || !sleepEnd) return alert("Укажите оба времени сна");
+        const now = new Date();
+        const start = new Date(now); const end = new Date(now);
+        const [sh, sm] = sleepStart.split(":"); start.setHours(sh, sm, 0, 0);
+        const [eh, em] = sleepEnd.split(":"); end.setHours(eh, em, 0, 0);
+        addEvent("Заснул", sleepStart, start.getTime());
+        addEvent("Проснулся", sleepEnd, end.getTime());
+    }
+
+    closeModal("manualModal");
+}
