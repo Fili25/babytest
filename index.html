@@ -58,16 +58,74 @@
     </div>
 
     <!-- Модальное окно настроек -->
-    <div id="settingsModal" class="modal hidden">
-      <div class="modal-content">
-        <h2>Настройки интервалов</h2>
-        <label>Интервал между кормлениями (в минутах):
-          <input type="number" id="feedIntervalInput" value="210">
-        </label>
-        <label>Интервал между снами (в минутах):
-          <input type="number" id="sleepIntervalInput" value="120">
-        </label>
-        <div class="modal-buttons">
+    
+<div id="settingsModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Настройки интервалов</h2>
+    <div class="settings-group">
+      <label>Интервал между кормлениями:</label>
+      <div class="stepper-row">
+        <div class="stepper">
+          <button onclick="updateDisplayValue('feedHoursVal', -1)">−</button>
+          <span id="feedHoursVal" class="value">0</span>
+          <button onclick="updateDisplayValue('feedHoursVal', 1)">+</button>
+          <span class="unit">ч</span>
+        </div>
+        <div class="stepper">
+          <button onclick="updateDisplayValue('feedMinutesVal', -1)">−</button>
+          <span id="feedMinutesVal" class="value">0</span>
+          <button onclick="updateDisplayValue('feedMinutesVal', 1)">+</button>
+          <span class="unit">мин</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <label>Интервал между снами:</label>
+      <div class="stepper-row">
+        <div class="stepper">
+          <button onclick="updateDisplayValue('sleepHoursVal', -1)">−</button>
+          <span id="sleepHoursVal" class="value">0</span>
+          <button onclick="updateDisplayValue('sleepHoursVal', 1)">+</button>
+          <span class="unit">ч</span>
+        </div>
+        <div class="stepper">
+          <button onclick="updateDisplayValue('sleepMinutesVal', -1)">−</button>
+          <span id="sleepMinutesVal" class="value">0</span>
+          <button onclick="updateDisplayValue('sleepMinutesVal', 1)">+</button>
+          <span class="unit">мин</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-buttons">
+      <button onclick="saveIntervalSettings()">Сохранить</button>
+      <button onclick="closeModal('settingsModal')">Отмена</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="settings-group">
+  <label>Интервал между снами:</label>
+  <div class="stepper-row">
+    <div class="stepper">
+      <button onclick="updateDisplayValue('sleepHoursVal', -1)">−</button>
+      <span id="sleepHoursVal" class="value">0</span>
+      <button onclick="updateDisplayValue('sleepHoursVal', 1)">+</button>
+      <span class="unit">ч</span>
+    </div>
+    <div class="stepper">
+      <button onclick="updateDisplayValue('sleepMinutesVal', -1)">−</button>
+      <span id="sleepMinutesVal" class="value">0</span>
+      <button onclick="updateDisplayValue('sleepMinutesVal', 1)">+</button>
+      <span class="unit">мин</span>
+    </div>
+  </div>
+</div>
+
+<div class="modal-buttons">
           <button onclick="saveIntervalSettings()">Сохранить</button>
           <button onclick="closeModal('settingsModal')">Отмена</button>
         </div>
