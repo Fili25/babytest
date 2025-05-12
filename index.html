@@ -61,13 +61,37 @@
     <div id="settingsModal" class="modal hidden">
       <div class="modal-content">
         <h2>Настройки интервалов</h2>
-        <label>Интервал между кормлениями:
-          <input type="number" id="feedHours" min="0" max="23"> ч
-          <input type="number" id="feedMinutes" min="0" max="59"> мин
+        
+<label>Интервал между кормлениями:</label>
+<div class="stepper">
+  <span>ч</span>
+  <button onclick="updateDisplayValue('feedHoursVal', -1)">−</button>
+  <span id="feedHoursVal">0</span>
+  <button onclick="updateDisplayValue('feedHoursVal', 1)">+</button>
+</div>
+<div class="stepper">
+  <span>мин</span>
+  <button onclick="updateDisplayValue('feedMinutesVal', -1)">−</button>
+  <span id="feedMinutesVal">0</span>
+  <button onclick="updateDisplayValue('feedMinutesVal', 1)">+</button>
+</div>
+
         </label>
-        <label>Интервал между снами:
-          <input type="number" id="sleepHours" min="0" max="23"> ч
-          <input type="number" id="sleepMinutes" min="0" max="59"> мин
+        
+<label>Интервал между снами:</label>
+<div class="stepper">
+  <span>ч</span>
+  <button onclick="updateDisplayValue('sleepHoursVal', -1)">−</button>
+  <span id="sleepHoursVal">0</span>
+  <button onclick="updateDisplayValue('sleepHoursVal', 1)">+</button>
+</div>
+<div class="stepper">
+  <span>мин</span>
+  <button onclick="updateDisplayValue('sleepMinutesVal', -1)">−</button>
+  <span id="sleepMinutesVal">0</span>
+  <button onclick="updateDisplayValue('sleepMinutesVal', 1)">+</button>
+</div>
+
         </label>
         <div class="modal-buttons">
           <button onclick="saveIntervalSettings()">Сохранить</button>
