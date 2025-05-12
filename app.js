@@ -3,7 +3,6 @@ let events = [];
 let feedInterval = 210 * 60 * 1000;
 let sleepInterval = 120 * 60 * 1000;
 
-
 function logEvent(type) {
     const now = new Date();
     const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -67,21 +66,32 @@ function updateNextTimes() {
     const nextSleepEl = document.getElementById("nextSleep");
     const now = Date.now();
 
-    let feedTime = nextFeedManual;
-    let sleepTime = nextSleepManual;
+    let feedTime = null;
+    let sleepTime = null;
 
-    if (!feedTime) {
-        const lastFeed = [...events].filter(e => e.type.toLowerCase().includes("кормление")).sort((a,b) => b.timestamp - a.timestamp)[0];
-        if (lastFeed) feedTime = lastFeed.timestamp + feedInterval;
+    const lastFeed = [...events].filter(e => e.type.toLowerCase().includes("кормление")).sort((a,b) => b.timestamp - a.timestamp)[0];
+    if (lastFeed) {
+        feedTime = lastFeed.timestamp + feedInterval;
     }
 
-    if (!sleepTime) {
-        const lastSleep = [...events].filter(e => e.type.toLowerCase().includes("проснулся")).sort((a,b) => b.timestamp - a.timestamp)[0];
-        if (lastSleep) sleepTime = lastSleep.timestamp + sleepInterval;
+    const lastSleep = [...events].filter(e => e.type.toLowerCase().includes("проснулся")).sort((a,b) => b.timestamp - a.timestamp)[0];
+    if (lastSleep) {
+        sleepTime = lastSleep.timestamp + sleepInterval;
     }
 
-    nextFeedEl.textContent = feedTime ? (feedTime - now > 0 ? formatMs(feedTime - now, feedTime) : `уже пора! ${formatMs(feedTime - now, feedTime, true)}`) : "–";
-    nextSleepEl.textContent = sleepTime ? (sleepTime - now > 0 ? formatMs(sleepTime - now, sleepTime) : `уже пора! ${formatMs(sleepTime - now, sleepTime, true)}`) : "–";
+    nextFeedEl.textContent = feedTime
+        ? (feedTime - now > 0
+            ? formatMs(feedTime - now, feedTime)
+            : `уже пора! ${formatMs(feedTime - now, feedTime, true)}`
+        )
+        : "–";
+
+    nextSleepEl.textContent = sleepTime
+        ? (sleepTime - now > 0
+            ? formatMs(sleepTime - now, sleepTime)
+            : `уже пора! ${formatMs(sleepTime - now, sleepTime, true)}`
+        )
+        : "–";
 }
 
 function openModal(id) {
@@ -90,7 +100,6 @@ function openModal(id) {
 function closeModal(id) {
     document.getElementById(id).classList.add("hidden");
 }
-
 function changeSettings() {
     document.getElementById("feedIntervalInput").value = Math.floor(feedInterval / 60000);
     document.getElementById("sleepIntervalInput").value = Math.floor(sleepInterval / 60000);
@@ -101,25 +110,6 @@ function saveIntervalSettings() {
     const sleep = parseInt(document.getElementById("sleepIntervalInput").value);
     if (!isNaN(feed)) feedInterval = feed * 60000;
     if (!isNaN(sleep)) sleepInterval = sleep * 60000;
-    updateNextTimes();
-    closeModal("settingsModal");
-}
-
-function saveTimeSettings() {
-    const feedTime = document.getElementById("feedTimeInput").value;
-    const sleepTime = document.getElementById("sleepTimeInput").value;
-    if (feedTime) {
-        const [h, m] = feedTime.split(":");
-        const d = new Date();
-        d.setHours(h, m, 0, 0);
-        nextFeedManual = d.getTime();
-    }
-    if (sleepTime) {
-        const [h, m] = sleepTime.split(":");
-        const d = new Date();
-        d.setHours(h, m, 0, 0);
-        nextSleepManual = d.getTime();
-    }
     updateNextTimes();
     closeModal("settingsModal");
 }
